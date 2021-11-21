@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="LogisticService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ILogisticService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:8301/?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:8301/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:8301/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/LogisticService" />
+      <xsd:import schemaLocation="http://localhost:8301/?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ILogisticService_Connect_InputMessage">
+    <wsdl:part name="parameters" element="tns:Connect" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_Connect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConnectResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_Disconnect_InputMessage">
+    <wsdl:part name="parameters" element="tns:Disconnect" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_Disconnect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DisconnectResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_Query_InputMessage">
+    <wsdl:part name="parameters" element="tns:Query" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_Query_OutputMessage">
+    <wsdl:part name="parameters" element="tns:QueryResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_GetCargoСategories_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCargoСategories" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_GetCargoСategories_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCargoСategoriesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_GetCity_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCity" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_GetCity_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCityResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_GetWays_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWays" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_GetWays_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWaysResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_AddOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddOrder" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_AddOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_AddFullOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddFullOrder" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_AddFullOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddFullOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_GetRoadStatuses_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRoadStatuses" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_GetRoadStatuses_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRoadStatusesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_IsRightAnswer_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsRightAnswer" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_IsRightAnswer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsRightAnswerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_UpdateOrderStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateOrderStatus" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_UpdateOrderStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateOrderStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_QueryCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:QueryCallback" />
+  </wsdl:message>
+  <wsdl:portType name="ILogisticService">
+    <wsdl:operation name="Connect">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILogisticService/Connect" message="tns:ILogisticService_Connect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILogisticService/ConnectResponse" message="tns:ILogisticService_Connect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Disconnect">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILogisticService/Disconnect" message="tns:ILogisticService_Disconnect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILogisticService/DisconnectResponse" message="tns:ILogisticService_Disconnect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Query">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILogisticService/Query" message="tns:ILogisticService_Query_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILogisticService/QueryResponse" message="tns:ILogisticService_Query_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCargoСategories">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILogisticService/GetCargoСategories" message="tns:ILogisticService_GetCargoСategories_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILogisticService/GetCargoСategoriesResponse" message="tns:ILogisticService_GetCargoСategories_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCity">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILogisticService/GetCity" message="tns:ILogisticService_GetCity_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILogisticService/GetCityResponse" message="tns:ILogisticService_GetCity_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWays">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILogisticService/GetWays" message="tns:ILogisticService_GetWays_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILogisticService/GetWaysResponse" message="tns:ILogisticService_GetWays_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILogisticService/AddOrder" message="tns:ILogisticService_AddOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILogisticService/AddOrderResponse" message="tns:ILogisticService_AddOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddFullOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILogisticService/AddFullOrder" message="tns:ILogisticService_AddFullOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILogisticService/AddFullOrderResponse" message="tns:ILogisticService_AddFullOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRoadStatuses">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILogisticService/GetRoadStatuses" message="tns:ILogisticService_GetRoadStatuses_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILogisticService/GetRoadStatusesResponse" message="tns:ILogisticService_GetRoadStatuses_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsRightAnswer">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILogisticService/IsRightAnswer" message="tns:ILogisticService_IsRightAnswer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILogisticService/IsRightAnswerResponse" message="tns:ILogisticService_IsRightAnswer_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOrderStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILogisticService/UpdateOrderStatus" message="tns:ILogisticService_UpdateOrderStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILogisticService/UpdateOrderStatusResponse" message="tns:ILogisticService_UpdateOrderStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/ILogisticService/QueryCallback" message="tns:ILogisticService_QueryCallback_OutputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ILogisticService" type="tns:ILogisticService">
+    <wsp:PolicyReference URI="#NetTcpBinding_ILogisticService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Connect">
+      <soap12:operation soapAction="http://tempuri.org/ILogisticService/Connect" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Disconnect">
+      <soap12:operation soapAction="http://tempuri.org/ILogisticService/Disconnect" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Query">
+      <soap12:operation soapAction="http://tempuri.org/ILogisticService/Query" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCargoСategories">
+      <soap12:operation soapAction="http://tempuri.org/ILogisticService/GetCargoСategories" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCity">
+      <soap12:operation soapAction="http://tempuri.org/ILogisticService/GetCity" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWays">
+      <soap12:operation soapAction="http://tempuri.org/ILogisticService/GetWays" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddOrder">
+      <soap12:operation soapAction="http://tempuri.org/ILogisticService/AddOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddFullOrder">
+      <soap12:operation soapAction="http://tempuri.org/ILogisticService/AddFullOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRoadStatuses">
+      <soap12:operation soapAction="http://tempuri.org/ILogisticService/GetRoadStatuses" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsRightAnswer">
+      <soap12:operation soapAction="http://tempuri.org/ILogisticService/IsRightAnswer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOrderStatus">
+      <soap12:operation soapAction="http://tempuri.org/ILogisticService/UpdateOrderStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryCallback">
+      <soap12:operation soapAction="http://tempuri.org/ILogisticService/QueryCallback" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LogisticService">
+    <wsdl:port name="NetTcpBinding_ILogisticService" binding="tns:NetTcpBinding_ILogisticService">
+      <soap12:address location="net.tcp://localhost:8302/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:8302/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>DESKTOP-EQOT4FI\L</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

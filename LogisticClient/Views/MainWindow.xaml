@@ -1,0 +1,158 @@
+﻿<Window x:Class="LogisticClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LogisticClient" xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"        
+        mc:Ignorable="d"
+        Title="Client" Height="535" Width="790" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="SingleBorderWindow" Loaded="Window_Loaded" Closing="Window_Closing">
+
+    <Grid>
+        <Grid>
+
+            <dragablz:TabablzControl>
+                <dragablz:TabablzControl.InterTabController>
+                    <dragablz:InterTabController/>
+                </dragablz:TabablzControl.InterTabController>
+
+                <TabItem Header="MAKE AN ORDER" FontWeight="Bold">
+
+                    <StackPanel Orientation="Horizontal" Margin="10,10,10,0">
+
+                        <DockPanel Margin="5"  Width="240" HorizontalAlignment="Left">
+                            <Border CornerRadius="5" BorderBrush="Gray" BorderThickness="2" DockPanel.Dock="Top" >
+                                <StackPanel HorizontalAlignment ="Left" Margin="6,10,2,10" Width="220"  >
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Label Content="SENDER" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left"/>
+                                    </StackPanel>
+
+                                    <TextBox x:Name="FirstNameSender" Margin="2" materialDesign:HintAssist.Hint="Firstname" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14"/>
+                                    <TextBox x:Name="LastNameSender" Margin="2" materialDesign:HintAssist.Hint="Lastname" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14"/>
+                                    <TextBox x:Name="PatronymicSender" Margin="2" materialDesign:HintAssist.Hint="Patronymic" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14"/>
+                                    <TextBox x:Name="PhoneNumberSender" Margin="2" materialDesign:HintAssist.Hint="Phone number" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14"/>
+
+                                    <Separator Margin="-8,8,-10,10" Height="1"  />
+
+                                    <Label Content="PASSPORT" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,2,0,-12"/>
+                                    <StackPanel  Orientation="Vertical" HorizontalAlignment="Left" Width="240">
+                                        <TextBox x:Name="PassportSeriesSender" Margin="0" materialDesign:HintAssist.Hint="Series" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14"/>
+                                        <TextBox x:Name="PassportNumberSender" Margin="0" materialDesign:HintAssist.Hint="Number" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Height="25" />
+                            <Label HorizontalContentAlignment="Center" VerticalAlignment="Bottom" Content="" Width="260" FontSize="24" Margin="-4,0,0,-18" x:Name="TrakingCode" MouseDown="TrakingCode_MouseDown"/>
+                        </DockPanel>
+
+                        <DockPanel Margin="5"  Width="240" HorizontalAlignment="Left">
+                            <Border CornerRadius="5" BorderBrush="Gray" BorderThickness="2" DockPanel.Dock="Top" >
+                                <StackPanel HorizontalAlignment ="Left" Margin="6,10,2,10" Width="220"  >
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Label Content="RECIPIENT" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left"/>
+                                    </StackPanel>
+
+                                    <TextBox x:Name="FirstNameRecipient" Margin="2" materialDesign:HintAssist.Hint="Firstname" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14"/>
+                                    <TextBox x:Name="LastNameRecipient" Margin="2" materialDesign:HintAssist.Hint="Lastname" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14"/>
+                                    <TextBox x:Name="PatronymicRecipient" Margin="2" materialDesign:HintAssist.Hint="Patronymic" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14"/>
+                                    <TextBox x:Name="PhoneNumberRecipient" Margin="2" materialDesign:HintAssist.Hint="Phone number" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14"/>
+
+                                    <Separator Margin="-8,8,-10,10" Height="1"  />
+
+                                    <Label Content="PASSPORT" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,2,0,-12"/>
+                                    <StackPanel  Orientation="Vertical" HorizontalAlignment="Left" Width="240">
+                                        <TextBox x:Name="PassportSeriesRecipient" Margin="0" materialDesign:HintAssist.Hint="Series" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14"/>
+                                        <TextBox x:Name="PassportNumberRecipient" Margin="0" materialDesign:HintAssist.Hint="Number" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14"/>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </Border>
+                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Height="25" />
+                        </DockPanel>
+
+                        <DockPanel Margin="5"  Width="240" HorizontalAlignment="Left">
+                            <Border CornerRadius="5" BorderBrush="Gray" BorderThickness="2" DockPanel.Dock="Top" >
+                                <StackPanel HorizontalAlignment ="Left" Margin="6,10,2,10" Width="220"  >
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Label Content="CARGO CATEGORIES" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left"/>
+                                    </StackPanel>
+
+                                    <ListBox x:Name="CargoCategories" Height="110" />
+
+                                    <Separator Margin="-8,8,-10,10" Height="1"  />
+
+                                    <Label Content="FROM" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,2,0,-12"/>
+                                    <StackPanel  Orientation="Vertical" HorizontalAlignment="Left" Width="240">
+                                        <ComboBox x:Name="SenderCity" Style="{StaticResource MaterialDesignFloatingHintComboBox}" materialDesign:HintAssist.Hint="Select a city to send" SelectionChanged="SenderCity_SelectionChanged"  />
+
+                                        <ComboBox IsEnabled="False" x:Name="SenderDepartment" Style="{StaticResource MaterialDesignFloatingHintComboBox}" materialDesign:HintAssist.Hint="Select a post office to send" SelectionChanged="SenderDepartment_SelectionChanged" />
+
+                                    </StackPanel>
+
+
+                                    <Label Content="TO" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,12,0,-12"/>
+                                    <StackPanel  Orientation="Vertical" HorizontalAlignment="Left" Width="240">
+                                        <ComboBox IsEnabled="False" x:Name="RecipientCity" Style="{StaticResource MaterialDesignFloatingHintComboBox}" materialDesign:HintAssist.Hint="Select a city to receive" SelectionChanged="RecipientCity_SelectionChanged"/>
+
+
+                                        <ComboBox IsEnabled="False" x:Name="RecipientDepartment" Style="{StaticResource MaterialDesignFloatingHintComboBox}" materialDesign:HintAssist.Hint="Select a post office to receive"/>
+
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </Border>
+                            <Button HorizontalAlignment="Center" Content="Accept" Width="240" Click="Button_Click_1"/>
+                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Height="25" />
+
+                        </DockPanel>
+
+                    </StackPanel>
+
+                </TabItem>
+
+                <TabItem Header="TRACKING">
+                    <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
+
+                        <DockPanel Margin="5"  Width="700" HorizontalAlignment="Left">
+                            <Border CornerRadius="5" BorderBrush="Gray" BorderThickness="2" DockPanel.Dock="Top" >
+                                <StackPanel HorizontalAlignment ="Left" Margin="6,10,2,10" Width="720">
+                                    <TextBox x:Name="SearchLine" Margin="2" materialDesign:HintAssist.Hint="Enter tracking code" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14" KeyDown="SearchLine_KeyDown" />
+                                    <Separator Margin="-6,8,-10,10" Height="1"/>
+                                    <ListBox x:Name="PathHistory" Height="420" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+                                </StackPanel>
+                            </Border>
+                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Height="25" />
+                        </DockPanel>
+
+
+                    </StackPanel>
+                </TabItem>
+
+                <TabItem Header="RECEIVE AN ORDER">
+
+                    <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
+
+                        <DockPanel Margin="5"  Width="385" Height="180" HorizontalAlignment="Left">
+                            <Border CornerRadius="5" BorderBrush="Gray" BorderThickness="2" DockPanel.Dock="Top" >
+                                <StackPanel HorizontalAlignment ="Left" Margin="6,10,2,10" Width="720"  >
+                                    <TextBox x:Name="ATrackingCode" Text="LV1049724429l" Margin="2" materialDesign:HintAssist.Hint="Enter tracking code" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14"/>
+                                    <TextBox x:Name="APhoneNumber" Text="89000000001" Margin="2" materialDesign:HintAssist.Hint="Enter the recipient's phone number" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14"/>
+                                    <Separator Margin="-20,10,-20,10" Height="1"/>
+                                    <Button Content="Check" Margin="10,0,360,0" Click="Button_CheckOrder"/>
+                                </StackPanel>
+                            </Border>
+
+                        </DockPanel>
+
+                    </StackPanel>
+
+                </TabItem>
+
+            </dragablz:TabablzControl>
+
+        </Grid>
+    </Grid>
+
+</Window>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/LogisticService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/LogisticService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8301/?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="ArrayOfCargoСategory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CargoСategory" nillable="true" type="tns:CargoСategory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCargoСategory" nillable="true" type="tns:ArrayOfCargoСategory" />
+  <xs:complexType name="CargoСategory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AddedСost" type="xs:int" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="BlockedTypes" nillable="true" type="q1:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CargoСategory" nillable="true" type="tns:CargoСategory" />
+  <xs:complexType name="City">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Departments" nillable="true" type="tns:ArrayOfDepartment" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="City" nillable="true" type="tns:City" />
+  <xs:complexType name="ArrayOfDepartment">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Department" nillable="true" type="tns:Department" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDepartment" nillable="true" type="tns:ArrayOfDepartment" />
+  <xs:complexType name="Department">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Department" nillable="true" type="tns:Department" />
+  <xs:complexType name="ArrayOfWay">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Way" nillable="true" type="tns:Way" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWay" nillable="true" type="tns:ArrayOfWay" />
+  <xs:complexType name="Way">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Cost" type="xs:int" />
+      <xs:element minOccurs="0" name="DeliveryType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DestinationCity" nillable="true" type="tns:City" />
+      <xs:element minOccurs="0" name="InitialCity" nillable="true" type="tns:City" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Way" nillable="true" type="tns:Way" />
+  <xs:complexType name="Order">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Cost" type="xs:int" />
+      <xs:element minOccurs="0" name="CurrentState" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Customer" nillable="true" type="tns:Customer" />
+      <xs:element minOccurs="0" name="DeliveryPoint" nillable="true" type="tns:Department" />
+      <xs:element minOccurs="0" name="Path" nillable="true" type="tns:Road" />
+      <xs:element minOccurs="0" name="ReceivingPoint" nillable="true" type="tns:Department" />
+      <xs:element minOccurs="0" name="Recipient" nillable="true" type="tns:Customer" />
+      <xs:element minOccurs="0" name="TrackingCode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Order" nillable="true" type="tns:Order" />
+  <xs:complexType name="Customer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Passport" nillable="true" type="tns:Passport" />
+      <xs:element minOccurs="0" name="Patronymic" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Customer" nillable="true" type="tns:Customer" />
+  <xs:complexType name="Passport">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Number" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Series" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Passport" nillable="true" type="tns:Passport" />
+  <xs:complexType name="Road">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Cost" type="xs:int" />
+      <xs:element minOccurs="0" name="Path" nillable="true" type="tns:ArrayOfNode" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Road" nillable="true" type="tns:Road" />
+  <xs:complexType name="ArrayOfNode">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Node" nillable="true" type="tns:Node" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNode" nillable="true" type="tns:ArrayOfNode" />
+  <xs:complexType name="Node">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Cost" type="xs:int" />
+      <xs:element minOccurs="0" name="No" type="xs:int" />
+      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Node" nillable="true" type="tns:Node" />
+  <xs:complexType name="ArrayOfRoadStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RoadStatus" nillable="true" type="tns:RoadStatus" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRoadStatus" nillable="true" type="tns:ArrayOfRoadStatus" />
+  <xs:complexType name="RoadStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CurrentState" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateTimeBegin" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DateTimeEnd" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DestinationCity" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DestinationCityDepartments" nillable="true" type="tns:ArrayOfDepartment" />
+      <xs:element minOccurs="0" name="InitialCityDepartments" nillable="true" type="tns:ArrayOfDepartment" />
+      <xs:element minOccurs="0" name="InitialCityName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderBeginDepartments" nillable="true" type="tns:Department" />
+      <xs:element minOccurs="0" name="OrderFinishDepartments" nillable="true" type="tns:Department" />
+      <xs:element minOccurs="0" name="SerialNumber" type="xs:int" />
+      <xs:element minOccurs="0" name="VisitStatus" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RoadStatus" nillable="true" type="tns:RoadStatus" />
+</xs:schema>
