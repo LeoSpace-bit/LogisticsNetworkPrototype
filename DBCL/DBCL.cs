@@ -5,32 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Simulations
+namespace DBCLibrary
 {
-    sealed class Connection
+    public static class DBCL
     {
-
-        private NpgsqlConnection _connection;
-
-        internal Connection()
-        {
-            _connection = new NpgsqlConnection(@"server=localhost;Port=5433;User Id=postgres;Password=123;Database=LogisticsNetworkPrototype");
-            _connection.Open();
-        }
-
-        ~Connection()
-        {
-            _connection.Close();
-        }
-
-        internal void ExecuteQuery(string query, out NpgsqlDataReader answer)
+        public static void ExecuteQuery(string query, out NpgsqlDataReader answer)
         {
             answer = null;
-
             try
             {
                 var command = new NpgsqlCommand();
-                command.Connection = _connection;
+                command.Connection = new NpgsqlConnection(@"server=localhost;Port=5433;User Id=postgres;Password=123;Database=LogisticsNetworkPrototype;Pooling=true;Minimum Pool Size=0;Maximum Pool Size=100;");
                 command.CommandType = System.Data.CommandType.Text;
                 command.CommandText = query;
                 answer = command.ExecuteReader();
@@ -39,16 +24,16 @@ namespace Simulations
             }
             catch (Exception e)
             {
-                Console.WriteLine($"[{DateTime.Now}] Ошибка выполнения запроса: {query}\n{e.Message}");
+                Console.WriteLine($"[{DateTime.Now}] Request execution error: {query}\n{e.Message}");
             }
         }
 
-        internal void ExecuteQuery(string query)
+        public static void ExecuteQuery(string query)
         {
             try
             {
                 var command = new NpgsqlCommand();
-                command.Connection = _connection;
+                command.Connection = new NpgsqlConnection(@"server=localhost;Port=5433;User Id=postgres;Password=123;Database=LogisticsNetworkPrototype;Pooling=true;Minimum Pool Size=0;Maximum Pool Size=100;");
                 command.CommandType = System.Data.CommandType.Text;
                 command.CommandText = query;
                 command.ExecuteReader();
@@ -57,18 +42,18 @@ namespace Simulations
             }
             catch (Exception e)
             {
-                Console.WriteLine($"[{DateTime.Now}] Ошибка выполнения запроса: {query}\n{e.Message}");
+                Console.WriteLine($"[{DateTime.Now}] Request execution error: {query}\n{e.Message}");
             }
         }
 
-        internal void ExecuteQueryScalar(string query, out object answer)
+        public static void ExecuteQueryScalar(string query, out object answer)
         {
             answer = null;
 
             try
             {
                 var command = new NpgsqlCommand();
-                command.Connection = _connection;
+                command.Connection = new NpgsqlConnection(@"server=localhost;Port=5433;User Id=postgres;Password=123;Database=LogisticsNetworkPrototype;Pooling=true;Minimum Pool Size=0;Maximum Pool Size=100;");
                 command.CommandType = System.Data.CommandType.Text;
                 command.CommandText = query;
                 answer = command.ExecuteScalar();
@@ -77,8 +62,9 @@ namespace Simulations
             }
             catch (Exception e)
             {
-                Console.WriteLine($"[{DateTime.Now}] Ошибка выполнения запроса: {query}\n{e.Message}");
+                Console.WriteLine($"[{DateTime.Now}] Request execution error: {query}\n{e.Message}");
             }
         }
+
     }
 }
