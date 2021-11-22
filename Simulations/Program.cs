@@ -12,7 +12,7 @@ namespace Simulations
         private static DataUpdateSimulation _dataUpdateSimulation;
         private static NewOrdersSimulation _newOrdersSimulation;
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             _dataUpdateSimulation = new DataUpdateSimulation();
             _newOrdersSimulation = new NewOrdersSimulation();

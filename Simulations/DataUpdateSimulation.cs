@@ -1,4 +1,5 @@
-﻿using Npgsql;
+﻿using DBCLibrary;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,24 +9,19 @@ using System.Windows.Forms;
 
 namespace Simulations
 {
-    // TODO сделать проверку того, что элемент является последним и перевести состояние заказа в Готов для получения
-    // +BUG: возможно при шаговом обновлении не присваивается значение даты (сбросить всё до false и пройтись)
     sealed class DataUpdateSimulation
     {
         /// <summary>
         /// Updates orders with status 'Accepted by the carrier' to 'In transit'
         /// </summary>
-        internal void UpdateAcceptedOrders() 
-        {
-            new Connection().ExecuteQuery("UPDATE public.\"order\" SET currentstate = 'In transit' WHERE currentstate = 'Accepted by the carrier';", out NpgsqlDataReader answer);
-        }
+        internal void UpdateAcceptedOrders() => new DBC().ExecuteQuery("UPDATE public.\"order\" SET currentstate = 'In transit' WHERE currentstate = 'Accepted by the carrier';");
 
         /// <summary>
         /// Updates the list of past "cities"
         /// </summary>
         internal void UpdateRoadOrders()
         {
-            new Connection().ExecuteQuery("SELECT road.orderid, MIN(road.serialnumber) FROM road JOIN \"order\" ON road.orderid = \"order\".id WHERE visitstatus = false AND \"order\".currentstate = 'In transit' GROUP BY road.orderid, road.visitstatus", out NpgsqlDataReader answer);
+            new DBC().ExecuteQuery("SELECT road.orderid, MIN(road.serialnumber) FROM road JOIN \"order\" ON road.orderid = \"order\".id WHERE visitstatus = false AND \"order\".currentstate = 'In transit' GROUP BY road.orderid, road.visitstatus", out NpgsqlDataReader answer);
 
             while(answer.Read())
             {
@@ -40,7 +36,7 @@ namespace Simulations
                     datetime = $", datatime = '{DateTime.UtcNow.AddSeconds(-1)}' , datatimend = '{DateTime.UtcNow}' ";
                 }
 
-                new Connection().ExecuteQuery($"UPDATE public.road SET visitstatus = true {datetime} WHERE orderid = {(int)answer[0]} AND serialnumber = {(int)answer[1]};");
+                new DBC().ExecuteQuery($"UPDATE public.road SET visitstatus = true {datetime} WHERE orderid = {(int)answer[0]} AND serialnumber = {(int)answer[1]};");
                 
             }
 
@@ -68,7 +64,7 @@ namespace Simulations
             });
             taskGetFinishPosition.Start();
 
-            new Connection().ExecuteQuery($"SELECT orderid,  MAX(serialnumber) FROM public.road JOIN \"order\" ON \"order\".id = road.orderid WHERE visitstatus = true AND \"order\".currentstate = 'In transit' GROUP BY orderid ORDER BY orderid;", out NpgsqlDataReader currentData);
+            new DBC().ExecuteQuery($"SELECT orderid,  MAX(serialnumber) FROM public.road JOIN \"order\" ON \"order\".id = road.orderid WHERE visitstatus = true AND \"order\".currentstate = 'In transit' GROUP BY orderid ORDER BY orderid;", out NpgsqlDataReader currentData);
 
             while (currentData.Read())
             {
@@ -96,7 +92,7 @@ namespace Simulations
 
             if(isExecuteUpdate)
             {
-                new Connection().ExecuteQuery($"UPDATE public.\"order\" SET currentstate = 'Arrived at the pick-up point' WHERE {ids.Remove(ids.Length - 2)};");
+                new DBC().ExecuteQuery($"UPDATE public.\"order\" SET currentstate = 'Arrived at the pick-up point' WHERE {ids.Remove(ids.Length - 2)};");
             }
 
         }

@@ -9,7 +9,6 @@ namespace Simulations
 {
     sealed class Connection
     {
-
         private NpgsqlConnection _connection;
 
         internal Connection()

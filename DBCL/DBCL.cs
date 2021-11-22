@@ -7,15 +7,29 @@ using System.Threading.Tasks;
 
 namespace DBCLibrary
 {
-    public static class DBCL
+    public class DBC
     {
-        public static void ExecuteQuery(string query, out NpgsqlDataReader answer)
+        private NpgsqlConnection _connection;
+
+        public DBC()
+        {
+            _connection = new NpgsqlConnection(@"server=localhost;Port=5433;User Id=postgres;Password=123;Database=LogisticsNetworkPrototype");
+            _connection.Open();
+        }
+
+        ~DBC()
+        {
+            _connection.Close();
+        }
+
+        public void ExecuteQuery(string query, out NpgsqlDataReader answer)
         {
             answer = null;
+
             try
             {
                 var command = new NpgsqlCommand();
-                command.Connection = new NpgsqlConnection(@"server=localhost;Port=5433;User Id=postgres;Password=123;Database=LogisticsNetworkPrototype;Pooling=true;Minimum Pool Size=0;Maximum Pool Size=100;");
+                command.Connection = _connection;
                 command.CommandType = System.Data.CommandType.Text;
                 command.CommandText = query;
                 answer = command.ExecuteReader();
@@ -28,12 +42,12 @@ namespace DBCLibrary
             }
         }
 
-        public static void ExecuteQuery(string query)
+        public void ExecuteQuery(string query)
         {
             try
             {
                 var command = new NpgsqlCommand();
-                command.Connection = new NpgsqlConnection(@"server=localhost;Port=5433;User Id=postgres;Password=123;Database=LogisticsNetworkPrototype;Pooling=true;Minimum Pool Size=0;Maximum Pool Size=100;");
+                command.Connection = _connection;
                 command.CommandType = System.Data.CommandType.Text;
                 command.CommandText = query;
                 command.ExecuteReader();
@@ -46,14 +60,14 @@ namespace DBCLibrary
             }
         }
 
-        public static void ExecuteQueryScalar(string query, out object answer)
+        public void ExecuteQueryScalar(string query, out object answer)
         {
             answer = null;
 
             try
             {
                 var command = new NpgsqlCommand();
-                command.Connection = new NpgsqlConnection(@"server=localhost;Port=5433;User Id=postgres;Password=123;Database=LogisticsNetworkPrototype;Pooling=true;Minimum Pool Size=0;Maximum Pool Size=100;");
+                command.Connection = _connection;
                 command.CommandType = System.Data.CommandType.Text;
                 command.CommandText = query;
                 answer = command.ExecuteScalar();

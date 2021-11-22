@@ -1,4 +1,5 @@
-﻿using Models.Graph;
+﻿using DBCLibrary;
+using Models.Graph;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ namespace Simulations
 
             try
             {
-                new Connection().ExecuteQuery("SELECT * FROM Way ORDER BY initialcityid, destinationcityid ASC;", out NpgsqlDataReader reader);
+                new DBC().ExecuteQuery("SELECT * FROM Way ORDER BY initialcityid, destinationcityid ASC;", out NpgsqlDataReader reader);
                 while (reader.Read())
                 {
                     ways.Add(new Way(LoadCity((int)reader[1]), LoadCity((int)reader[2]), (int)reader[3], reader[4].ToString()));
@@ -60,7 +61,7 @@ namespace Simulations
 
             try
             {
-                new Connection().ExecuteQuery($"SELECT id, name, departments::TEXT FROM City WHERE id = {id};", out NpgsqlDataReader reader);
+                new DBC().ExecuteQuery($"SELECT id, name, departments::TEXT FROM City WHERE id = {id};", out NpgsqlDataReader reader);
                 while (reader.Read())
                 {
                     city.ID = (int)reader[0] - 1;
@@ -124,8 +125,7 @@ namespace Simulations
             var cargoСategories = new List<Tuple<string, int, List<Type>>>();
             try
             {
-                new Connection().ExecuteQuery("SELECT * FROM CargoСategory", out NpgsqlDataReader reader);
-
+                new DBC().ExecuteQuery("SELECT * FROM CargoСategory", out NpgsqlDataReader reader);
                 while (reader.Read())
                 {
                     Tuple<string, int, List<Type>> cargo;
@@ -272,13 +272,13 @@ namespace Simulations
         {
             try
             {
-                new Connection().ExecuteQueryScalar($"INSERT INTO passport (series, number) VALUES ({order.Customer.Passport.Series}, {order.Customer.Passport.Number}) RETURNING id", out var customerPassID);
-                new Connection().ExecuteQueryScalar($"INSERT INTO passport (series, number) VALUES ({order.Recipient.Passport.Series}, {order.Recipient.Passport.Number}) RETURNING id", out var recipientPassID);
+                new DBC().ExecuteQueryScalar($"INSERT INTO passport (series, number) VALUES ({order.Customer.Passport.Series}, {order.Customer.Passport.Number}) RETURNING id", out var customerPassID);
+                new DBC().ExecuteQueryScalar($"INSERT INTO passport (series, number) VALUES ({order.Recipient.Passport.Series}, {order.Recipient.Passport.Number}) RETURNING id", out var recipientPassID);
 
-                new Connection().ExecuteQueryScalar($"INSERT INTO customer (firstName, lastName, patronymic, passportID, phoneNumber) VALUES('{order.Customer.FirstName}', '{order.Customer.LastName}', '{order.Customer.Patronymic}', {(int)customerPassID}, '{order.Customer.PhoneNumber}') RETURNING id", out var customerID);
-                new Connection().ExecuteQueryScalar($"INSERT INTO customer (firstName, lastName, patronymic, passportID, phoneNumber) VALUES('{order.Recipient.FirstName}', '{order.Recipient.LastName}', '{order.Recipient.Patronymic}', {(int)recipientPassID}, '{order.Recipient.PhoneNumber}') RETURNING id", out var recipientID);
+                new DBC().ExecuteQueryScalar($"INSERT INTO customer (firstName, lastName, patronymic, passportID, phoneNumber) VALUES('{order.Customer.FirstName}', '{order.Customer.LastName}', '{order.Customer.Patronymic}', {(int)customerPassID}, '{order.Customer.PhoneNumber}') RETURNING id", out var customerID);
+                new DBC().ExecuteQueryScalar($"INSERT INTO customer (firstName, lastName, patronymic, passportID, phoneNumber) VALUES('{order.Recipient.FirstName}', '{order.Recipient.LastName}', '{order.Recipient.Patronymic}', {(int)recipientPassID}, '{order.Recipient.PhoneNumber}') RETURNING id", out var recipientID);
 
-                new Connection().ExecuteQueryScalar($"INSERT INTO \"order\" (customerID, recipientID, cost, receivingPoint, deliveryPoint, trackingCode) VALUES ({(int)customerID}, {(int)recipientID}, {order.Cost}, ROW('{order.ReceivingPoint.Name}', '{order.ReceivingPoint.Address}'), ROW('{order.DeliveryPoint.Name}', '{order.DeliveryPoint.Address}'), '{order.TrackingCode}' ) RETURNING id", out var resultID);
+                new DBC().ExecuteQueryScalar($"INSERT INTO \"order\" (customerID, recipientID, cost, receivingPoint, deliveryPoint, trackingCode) VALUES ({(int)customerID}, {(int)recipientID}, {order.Cost}, ROW('{order.ReceivingPoint.Name}', '{order.ReceivingPoint.Address}'), ROW('{order.DeliveryPoint.Name}', '{order.DeliveryPoint.Address}'), '{order.TrackingCode}' ) RETURNING id", out var resultID);
 
                 id = (int)resultID;
 
@@ -301,18 +301,19 @@ namespace Simulations
                     Node node = order.Path.Path[i];
                     Node nextNode = order.Path.Path[i + 1];
 
-                    new Connection().ExecuteQueryScalar($"SELECT id FROM way WHERE initialCityID = {node.No + 1} AND destinationCityID = {nextNode.No + 1} AND cost = {nextNode.Cost} AND possibleDeliveryType = '{nextNode.Type}';", out var wayID);
-                    Console.WriteLine($"<{wayID}>  from [{node.No + 1}] to [{nextNode.No + 1}] where cost = {nextNode.Cost} AND possibleDeliveryType = '{nextNode.Type}' ");
+                    new DBC().ExecuteQueryScalar($"SELECT id FROM way WHERE initialCityID = {node.No + 1} AND destinationCityID = {nextNode.No + 1} AND cost = {nextNode.Cost} AND possibleDeliveryType = '{nextNode.Type}';", out var wayID);
 
                     if (i + 1 == 1)
                     {
-                        new Connection().ExecuteQuery($"INSERT INTO road (orderID, wayID, serialNumber, visitStatus, datatime, datatimend) VALUES ({orderID}, {wayID}, {i + 1}, false, '{DateTime.UtcNow}', '{DateTime.MinValue}')", out var _); //{DateTime.Now} ExecuteCommand(conn, $"INSERT INTO road (orderID, wayID, visitStatus, datatime) VALUES ({orderID}, {wayID}, false, null)", out object obj);
+                        new DBC().ExecuteQuery($"INSERT INTO road (orderID, wayID, serialNumber, visitStatus, datatime, datatimend) VALUES ({orderID}, {wayID}, {i + 1}, false, '{DateTime.UtcNow}', '{DateTime.MinValue}')");
                     }
                     else
                     {
-                        new Connection().ExecuteQuery($"INSERT INTO road (orderID, wayID, serialNumber, visitStatus, datatime, datatimend) VALUES ({orderID}, {wayID}, {i + 1}, false, '{DateTime.MinValue}', '{DateTime.MinValue}')", out var _); //{DateTime.Now} ExecuteCommand(conn, $"INSERT INTO road (orderID, wayID, visitStatus, datatime) VALUES ({orderID}, {wayID}, false, null)", out object obj);
+                        new DBC().ExecuteQuery($"INSERT INTO road (orderID, wayID, serialNumber, visitStatus, datatime, datatimend) VALUES ({orderID}, {wayID}, {i + 1}, false, '{DateTime.MinValue}', '{DateTime.MinValue}')");
                     }
                 }
+
+                Console.WriteLine("Full order is added");
 
             }
             catch (Exception e)
