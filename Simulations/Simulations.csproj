@@ -90,7 +90,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\City.cs" />
-    <Compile Include="Models\Connection.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="DataUpdateSimulation.cs" />
     <Compile Include="Models\Department.cs" />

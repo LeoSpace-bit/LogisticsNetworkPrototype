@@ -53,7 +53,7 @@ namespace Simulations
             {
                 List<Tuple<int, int>> values = new List<Tuple<int, int>>();
 
-                new Connection().ExecuteQuery($"SELECT orderid,  MAX(serialnumber) FROM public.road JOIN \"order\" ON \"order\".id = road.orderid WHERE \"order\".currentstate = 'In transit' GROUP BY orderid ORDER BY orderid;", out NpgsqlDataReader finishData);
+                new DBC().ExecuteQuery($"SELECT orderid,  MAX(serialnumber) FROM public.road JOIN \"order\" ON \"order\".id = road.orderid WHERE \"order\".currentstate = 'In transit' GROUP BY orderid ORDER BY orderid;", out NpgsqlDataReader finishData);
 
                 while (finishData.Read())
                 {

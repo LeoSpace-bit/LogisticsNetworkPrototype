@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
-using LogisticService.model;
-using LogisticService;
 using Npgsql;
-using System.Xml.Linq;
-using System.Diagnostics;
-
+using DBCLibrary;
 namespace LogisticService
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
@@ -53,15 +47,7 @@ namespace LogisticService
 
                 try
                 {
-                    var conn = new NpgsqlConnection(@"server=localhost;Port=5433;User Id=postgres;Password=123;Database=LogisticsNetworkPrototype");
-                    conn.Open();
-                    NpgsqlCommand command = new NpgsqlCommand();
-                    command.Connection = conn;
-                    command.CommandType = System.Data.CommandType.Text;
-                    command.CommandText = query;
-
-                    NpgsqlDataReader dr = command.ExecuteReader();
-
+                    new DBC().ExecuteQuery(query, out var dr);
                     while(dr.Read())
                     {
                         foreach (var item in dr)
@@ -70,9 +56,6 @@ namespace LogisticService
                         }
                         answer += "\n";
                     }
-
-                    command.Dispose();
-                    conn.Close();
 
                 }
                 catch (Exception e)
@@ -90,14 +73,7 @@ namespace LogisticService
             List<CargoСategory> cargoСategories = new List<CargoСategory>();
             try
             {
-                var conn = new NpgsqlConnection(@"server=localhost;Port=5433;User Id=postgres;Password=123;Database=LogisticsNetworkPrototype");
-                conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand();
-                command.Connection = conn;
-                command.CommandType = System.Data.CommandType.Text;
-                command.CommandText = "SELECT * FROM CargoСategory";
-
-                NpgsqlDataReader reader = command.ExecuteReader();
+                new DBC().ExecuteQuery("SELECT * FROM CargoСategory", out NpgsqlDataReader reader);
                 while (reader.Read())
                 {
                     CargoСategory cargo = new CargoСategory();
@@ -118,10 +94,6 @@ namespace LogisticService
 
                     cargoСategories.Add(cargo);
                 }
-
-                command.Dispose();
-                conn.Close();
-
             }
             catch (Exception e)
             {
@@ -138,14 +110,7 @@ namespace LogisticService
 
             try
             {
-                var conn = new NpgsqlConnection(@"server=localhost;Port=5433;User Id=postgres;Password=123;Database=LogisticsNetworkPrototype");
-                conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand();
-                command.Connection = conn;
-                command.CommandType = System.Data.CommandType.Text;
-                command.CommandText = "SELECT id, name, departments::TEXT FROM City WHERE id = 1;";
-
-                NpgsqlDataReader reader = command.ExecuteReader();
+                new DBC().ExecuteQuery("SELECT id, name, departments::TEXT FROM City WHERE id = 1;", out NpgsqlDataReader reader);
                 while (reader.Read())
                 {
                     city.ID = (int)reader[0] - 1;
@@ -160,12 +125,7 @@ namespace LogisticService
 
                         city.Departments.Add(new Department() {Name = values[0], Address = values[1] });
                     }
-
                 }
-
-                command.Dispose();
-                conn.Close();
-
             }
             catch (Exception e)
             {
@@ -173,7 +133,6 @@ namespace LogisticService
             }
 
             return city;
-
         }
 
         public List<Way> GetWays()
@@ -182,14 +141,7 @@ namespace LogisticService
 
             try
             {
-                var conn = new NpgsqlConnection(@"server=localhost;Port=5433;User Id=postgres;Password=123;Database=LogisticsNetworkPrototype");
-                conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand();
-                command.Connection = conn;
-                command.CommandType = System.Data.CommandType.Text;
-                command.CommandText = "SELECT * FROM Way ORDER BY initialcityid, destinationcityid ASC;";
-
-                NpgsqlDataReader reader = command.ExecuteReader();
+                new DBC().ExecuteQuery("SELECT * FROM Way ORDER BY initialcityid, destinationcityid ASC;", out NpgsqlDataReader reader);
                 while (reader.Read())
                 {
                     Way way = new Way();
@@ -201,10 +153,6 @@ namespace LogisticService
 
                     ways.Add(way);
                 }
-
-                command.Dispose();
-                conn.Close();
-
             }
             catch (Exception e)
             {
@@ -221,14 +169,7 @@ namespace LogisticService
 
             try
             {
-                var conn = new NpgsqlConnection(@"server=localhost;Port=5433;User Id=postgres;Password=123;Database=LogisticsNetworkPrototype");
-                conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand();
-                command.Connection = conn;
-                command.CommandType = System.Data.CommandType.Text;
-                command.CommandText = $"SELECT id, name, departments::TEXT FROM City WHERE id = {id};";
-
-                NpgsqlDataReader reader = command.ExecuteReader();
+                new DBC().ExecuteQuery($"SELECT id, name, departments::TEXT FROM City WHERE id = {id};", out NpgsqlDataReader reader);
                 while (reader.Read())
                 {
                     city.ID = (int)reader[0] - 1;
@@ -240,15 +181,9 @@ namespace LogisticService
                     foreach (var item in departsStringType)
                     {
                         var values = item.Split('λ');
-
                         city.Departments.Add(new Department() { Name = values[0], Address = values[1] });
                     }
-
                 }
-
-                command.Dispose();
-                conn.Close();
-
             }
             catch (Exception e)
             {
@@ -263,20 +198,15 @@ namespace LogisticService
         {
             try
             {
-                var conn = new NpgsqlConnection(@"server=localhost;Port=5433;User Id=postgres;Password=123;Database=LogisticsNetworkPrototype");
-                conn.Open();
+                new DBC().ExecuteQueryScalar($"INSERT INTO passport (series, number) VALUES ({order.Customer.Passport.Series}, {order.Customer.Passport.Number}) RETURNING id", out object customerPassID);
+                new DBC().ExecuteQueryScalar($"INSERT INTO passport (series, number) VALUES ({order.Recipient.Passport.Series}, {order.Recipient.Passport.Number}) RETURNING id", out object recipientPassID);
 
-                ExecuteCommand(conn, $"INSERT INTO passport (series, number) VALUES ({order.Customer.Passport.Series}, {order.Customer.Passport.Number}) RETURNING id", out object customerPassID);
-                ExecuteCommand(conn, $"INSERT INTO passport (series, number) VALUES ({order.Recipient.Passport.Series}, {order.Recipient.Passport.Number}) RETURNING id", out object recipientPassID);
+                new DBC().ExecuteQueryScalar($"INSERT INTO customer (firstName, lastName, patronymic, passportID, phoneNumber) VALUES('{order.Customer.FirstName}', '{order.Customer.LastName}', '{order.Customer.Patronymic}', {(int)customerPassID}, '{order.Customer.PhoneNumber}') RETURNING id", out object customerID);
+                new DBC().ExecuteQueryScalar($"INSERT INTO customer (firstName, lastName, patronymic, passportID, phoneNumber) VALUES('{order.Recipient.FirstName}', '{order.Recipient.LastName}', '{order.Recipient.Patronymic}', {(int)recipientPassID}, '{order.Recipient.PhoneNumber}') RETURNING id", out object recipientID);
 
-                ExecuteCommand(conn, $"INSERT INTO customer (firstName, lastName, patronymic, passportID, phoneNumber) VALUES('{order.Customer.FirstName}', '{order.Customer.LastName}', '{order.Customer.Patronymic}', {(int)customerPassID}, '{order.Customer.PhoneNumber}') RETURNING id", out object customerID);
-                ExecuteCommand(conn, $"INSERT INTO customer (firstName, lastName, patronymic, passportID, phoneNumber) VALUES('{order.Recipient.FirstName}', '{order.Recipient.LastName}', '{order.Recipient.Patronymic}', {(int)recipientPassID}, '{order.Recipient.PhoneNumber}') RETURNING id", out object recipientID);
-
-                ExecuteCommand(conn, $"INSERT INTO \"order\" (customerID, recipientID, cost, receivingPoint, deliveryPoint, trackingCode) VALUES ({(int)customerID}, {(int)recipientID}, {order.Cost}, ROW('{order.ReceivingPoint.Name}', '{order.ReceivingPoint.Address}'), ROW('{order.DeliveryPoint.Name}', '{order.DeliveryPoint.Address}'), '{order.TrackingCode}' ) RETURNING id", out object resultID);
+                new DBC().ExecuteQueryScalar($"INSERT INTO \"order\" (customerID, recipientID, cost, receivingPoint, deliveryPoint, trackingCode) VALUES ({(int)customerID}, {(int)recipientID}, {order.Cost}, ROW('{order.ReceivingPoint.Name}', '{order.ReceivingPoint.Address}'), ROW('{order.DeliveryPoint.Name}', '{order.DeliveryPoint.Address}'), '{order.TrackingCode}' ) RETURNING id", out object resultID);
 
                 id = (int)resultID;
-
-                conn.Close();
 
             }
             catch (Exception e)
@@ -292,32 +222,22 @@ namespace LogisticService
 
             try
             {
-                var conn = new NpgsqlConnection(@"server=localhost;Port=5433;User Id=postgres;Password=123;Database=LogisticsNetworkPrototype");
-                conn.Open();
-
                 for (int i = 0; i < order.Path.Path.Count - 1; i++)
                 {
                     Node node = order.Path.Path[i];
                     Node nextNode = order.Path.Path[i + 1];
 
-                    //(initialCityID, destinationCityID, cost, possibleDeliveryType
-
-                    ExecuteCommand(conn, $"SELECT id FROM way WHERE initialCityID = {node.No + 1} AND destinationCityID = {nextNode.No + 1} AND cost = {nextNode.Cost} AND possibleDeliveryType = '{nextNode.Type}';", out object wayID);
-                    //Console.WriteLine($"<{wayID}>  from [{node.No + 1}] to [{nextNode.No + 1}] where cost = {nextNode.Cost} AND possibleDeliveryType = '{nextNode.Type}' ");
-
+                    new DBC().ExecuteQueryScalar($"SELECT id FROM way WHERE initialCityID = {node.No + 1} AND destinationCityID = {nextNode.No + 1} AND cost = {nextNode.Cost} AND possibleDeliveryType = '{nextNode.Type}';", out object wayID);
+                    
                     if (i + 1 == 1)
                     {
-                        ExecuteCommand(conn, $"INSERT INTO road (orderID, wayID, serialNumber, visitStatus, datatime, datatimend) VALUES ({orderID}, {wayID}, {i + 1}, false, '{DateTime.UtcNow}', '{DateTime.MinValue}')", out object obj); //{DateTime.Now} ExecuteCommand(conn, $"INSERT INTO road (orderID, wayID, visitStatus, datatime) VALUES ({orderID}, {wayID}, false, null)", out object obj);
+                        new DBC().ExecuteQueryScalar($"INSERT INTO road (orderID, wayID, serialNumber, visitStatus, datatime, datatimend) VALUES ({orderID}, {wayID}, {i + 1}, false, '{DateTime.UtcNow}', '{DateTime.MinValue}')", out object obj);
                     }
                     else
                     {
-                        ExecuteCommand(conn, $"INSERT INTO road (orderID, wayID, serialNumber, visitStatus, datatime, datatimend) VALUES ({orderID}, {wayID}, {i + 1}, false, '{DateTime.MinValue}', '{DateTime.MinValue}')", out object obj); //{DateTime.Now} ExecuteCommand(conn, $"INSERT INTO road (orderID, wayID, visitStatus, datatime) VALUES ({orderID}, {wayID}, false, null)", out object obj);
+                        new DBC().ExecuteQueryScalar($"INSERT INTO road (orderID, wayID, serialNumber, visitStatus, datatime, datatimend) VALUES ({orderID}, {wayID}, {i + 1}, false, '{DateTime.MinValue}', '{DateTime.MinValue}')", out object obj);
                     }
-
-
                 }
-
-                conn.Close();
             }
             catch (Exception e)
             {
@@ -326,29 +246,13 @@ namespace LogisticService
 
         }
 
-        private void ExecuteCommand(NpgsqlConnection connection, string command, out object answer)
-        {
-            NpgsqlCommand npgsqlCommand = new NpgsqlCommand(command, connection);
-            npgsqlCommand.Prepare();
-            npgsqlCommand.CommandType = CommandType.Text;
-            answer = npgsqlCommand.ExecuteScalar();
-            npgsqlCommand.Dispose();
-        }
-
         public List<RoadStatus> GetRoadStatuses(string trakingCode)
         {
             var roadStatuses = new List<RoadStatus>();
 
             try
             {
-                var conn = new NpgsqlConnection(@"server=localhost;Port=5433;User Id=postgres;Password=123;Database=LogisticsNetworkPrototype");
-                conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand();
-                command.Connection = conn;
-                command.CommandType = System.Data.CommandType.Text;
-                command.CommandText = $"SELECT road.serialnumber, (SELECT city.name FROM city WHERE city.id = way.initialcityid), (SELECT city.departments FROM city WHERE city.id = way.initialcityid)::TEXT, (SELECT city.name FROM city WHERE city.id = way.destinationcityid), (SELECT city.departments FROM city WHERE city.id = way.destinationcityid)::TEXT, road.visitstatus, road.datatime, road.datatimend, (\"order\".receivingpoint)::TEXT, (\"order\".deliverypoint)::TEXT, \"order\".currentstate FROM road JOIN way ON way.id = road.wayid JOIN \"order\" ON \"order\".id = orderid WHERE \"order\".trackingcode = '{trakingCode}' ORDER BY road.serialnumber;";
-
-                NpgsqlDataReader reader = command.ExecuteReader();
+                new DBC().ExecuteQuery($"SELECT road.serialnumber, (SELECT city.name FROM city WHERE city.id = way.initialcityid), (SELECT city.departments FROM city WHERE city.id = way.initialcityid)::TEXT, (SELECT city.name FROM city WHERE city.id = way.destinationcityid), (SELECT city.departments FROM city WHERE city.id = way.destinationcityid)::TEXT, road.visitstatus, road.datatime, road.datatimend, (\"order\".receivingpoint)::TEXT, (\"order\".deliverypoint)::TEXT, \"order\".currentstate FROM road JOIN way ON way.id = road.wayid JOIN \"order\" ON \"order\".id = orderid WHERE \"order\".trackingcode = '{trakingCode}' ORDER BY road.serialnumber;", out NpgsqlDataReader reader);
                 while (reader.Read())
                 {
                     roadStatuses.Add(new RoadStatus()
@@ -366,10 +270,6 @@ namespace LogisticService
                         CurrentState = reader[10].ToString()
                     });
                 }
-
-                command.Dispose();
-                conn.Close();
-
             }
             catch (Exception e)
             {
@@ -377,7 +277,6 @@ namespace LogisticService
             }
 
             return roadStatuses;
-
         }
 
         private List<Department> GetDepartments(string data)
@@ -401,17 +300,8 @@ namespace LogisticService
             bool value = false;
             try
             {
-                var conn = new NpgsqlConnection(@"server=localhost;Port=5433;User Id=postgres;Password=123;Database=LogisticsNetworkPrototype");
-                conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand();
-                command.Connection = conn;
-                command.CommandType = System.Data.CommandType.Text;
-                command.CommandText = $"SELECT CASE WHEN EXISTS(SELECT \"order\".id, customer.phonenumber FROM \"order\" JOIN customer ON \"order\".recipientid = customer.id WHERE trackingcode = '{trakingCode}' AND customer.phonenumber = '{phoneNumber}' AND \"order\".currentstate = 'Arrived at the pick-up point') THEN CAST(1 as boolean) ELSE CAST(0 AS boolean) END;";
-
-                value = (bool) command.ExecuteScalar();
-
-                command.Dispose();
-                conn.Close();
+                new DBC().ExecuteQueryScalar($"SELECT CASE WHEN EXISTS(SELECT \"order\".id, customer.phonenumber FROM \"order\" JOIN customer ON \"order\".recipientid = customer.id WHERE trackingcode = '{trakingCode}' AND customer.phonenumber = '{phoneNumber}' AND \"order\".currentstate = 'Arrived at the pick-up point') THEN CAST(1 as boolean) ELSE CAST(0 AS boolean) END;", out var answer);
+                value = (bool)answer;
             }
             catch (Exception e)
             {
@@ -425,12 +315,7 @@ namespace LogisticService
         {
             try
             {
-                var conn = new NpgsqlConnection(@"server=localhost;Port=5433;User Id=postgres;Password=123;Database=LogisticsNetworkPrototype");
-                conn.Open();
-
-                ExecuteCommand(conn, $"UPDATE public.\"order\" SET currentstate = '{status}' WHERE trackingcode = '{trakingCode}';", out object obj);
-
-                conn.Close();
+                new DBC().ExecuteQuery($"UPDATE public.\"order\" SET currentstate = '{status}' WHERE trackingcode = '{trakingCode}';");
             }
             catch (Exception e)
             {
