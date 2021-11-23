@@ -1,10 +1,8 @@
 ﻿using LogisticClient.Models.GraphModel;
+using System.Collections.Generic;
 using LogisticService;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;

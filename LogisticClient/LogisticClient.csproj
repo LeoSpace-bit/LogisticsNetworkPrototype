@@ -99,7 +99,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="LogisticService\Node.cs" />
     <Compile Include="Models\GraphModel\Graph.cs" />
     <Compile Include="Models\GraphModel\Node.cs" />
     <Compile Include="Models\GraphModel\Type.cs" />

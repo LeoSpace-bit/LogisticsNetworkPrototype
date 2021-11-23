@@ -1,17 +1,9 @@
 ﻿using LogisticClient.Models;
-using LogisticClient.Models.GraphModel;
 using LogisticClient.Views;
-using LogisticService;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Way = LogisticService.Way;
 
 namespace LogisticClient
 {
@@ -22,10 +14,7 @@ namespace LogisticClient
         private LogisticService.LogisticServiceClient _client;
         private MainManager _manager;
 
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        public MainWindow() => InitializeComponent();
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -169,5 +158,4 @@ namespace LogisticClient
         }
 
     }
-
 }
