@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LogisticClient" xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"        
         mc:Ignorable="d"
-        Title="Client"  Height="522.333" Width="770"  WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" Loaded="Window_Loaded" Closing="Window_Closing">
+        Title="Client" Icon="/Icons/ForwardingMasterIcon.ico"  Height="522" Width="770"  WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" Loaded="Window_Loaded" Closing="Window_Closing">
 
     <Grid>
         <Grid Height="30" VerticalAlignment="Top" Background="{StaticResource PrimaryHueMidBrush}" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
