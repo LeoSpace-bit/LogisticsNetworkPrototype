@@ -5,11 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LogisticClient" xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"        
         mc:Ignorable="d"
-        Title="Client" Height="535" Width="790" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="SingleBorderWindow" Loaded="Window_Loaded" Closing="Window_Closing">
+        Title="Client"  Height="522.333" Width="770"  WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" Loaded="Window_Loaded" Closing="Window_Closing">
 
     <Grid>
-        <Grid>
-
+        <Grid Height="30" VerticalAlignment="Top" Background="{StaticResource PrimaryHueMidBrush}" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+            <TextBlock Text="FORWARDING MASTER" Foreground="{StaticResource PrimaryHueMidForegroundBrush}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" FontFamily="Champagne &amp; Limousines" FontWeight="Bold" Margin="8,9,0,4" />
+            <Button Content="×" HorizontalAlignment="Right" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}"  Width="36" FontSize="26" Height="36" Margin="0,-6,-2,0" Click="CloseForm_Click">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="{StaticResource PrimaryHueMidBrush}"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="0">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Red"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
+        <Grid Margin="0 30 0 0">
             <dragablz:TabablzControl>
                 <dragablz:TabablzControl.InterTabController>
                     <dragablz:InterTabController/>
@@ -103,7 +126,7 @@
 
                                 </StackPanel>
                             </Border>
-                            <Button HorizontalAlignment="Center" Content="Accept" Width="240" Click="Button_Click_1"/>
+                            <Button HorizontalAlignment="Center" Content="ACCEPT" Width="240" Click="Button_Click_1" FontWeight="Bold" FontSize="14"/>
                             <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Height="25" />
 
                         </DockPanel>
@@ -140,7 +163,7 @@
                                     <TextBox x:Name="ATrackingCode" Text="LV1049724429l" Margin="2" materialDesign:HintAssist.Hint="Enter tracking code" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14"/>
                                     <TextBox x:Name="APhoneNumber" Text="89000000001" Margin="2" materialDesign:HintAssist.Hint="Enter the recipient's phone number" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14"/>
                                     <Separator Margin="-20,10,-20,10" Height="1"/>
-                                    <Button Content="Check" Margin="10,0,360,0" Click="Button_CheckOrder"/>
+                                    <Button Content="CHECK" FontWeight="Bold" FontSize="14" Margin="10,0,360,0" Click="Button_CheckOrder"/>
                                 </StackPanel>
                             </Border>
 

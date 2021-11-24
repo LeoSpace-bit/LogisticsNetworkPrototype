@@ -37,9 +37,17 @@ namespace LogisticClient
         {
             if (!isConnected)
             {
-                _client = new LogisticService.LogisticServiceClient(new System.ServiceModel.InstanceContext(this));
-                CLIENT_ID = _client.Connect();
-                isConnected = true;
+                try
+                {
+                    _client = new LogisticService.LogisticServiceClient(new System.ServiceModel.InstanceContext(this));
+                    CLIENT_ID = _client.Connect();
+                    isConnected = true;
+                }
+                catch (System.Exception e)
+                {
+                    MessageBox.Show(e.ToString(), "[ ERROR ] CONNECTING");
+                    Close();
+                }
             }
         }
 
@@ -157,5 +165,12 @@ namespace LogisticClient
             }
         }
 
+        private void Grid_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) => DragMove();
+
+        private void CloseForm_Click(object sender, RoutedEventArgs e)
+        {
+            Disconnect();
+            Close();
+        }
     }
 }
