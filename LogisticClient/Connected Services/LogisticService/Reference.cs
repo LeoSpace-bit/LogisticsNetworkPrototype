@@ -1062,6 +1062,24 @@ namespace LogisticClient.LogisticService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILogisticService/UpdateOrderStatus", ReplyAction="http://tempuri.org/ILogisticService/UpdateOrderStatusResponse")]
         System.Threading.Tasks.Task UpdateOrderStatusAsync(string trakingCode, string status);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILogisticService/GetCurrentProfit", ReplyAction="http://tempuri.org/ILogisticService/GetCurrentProfitResponse")]
+        int GetCurrentProfit(System.DateTime start, System.DateTime end);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILogisticService/GetCurrentProfit", ReplyAction="http://tempuri.org/ILogisticService/GetCurrentProfitResponse")]
+        System.Threading.Tasks.Task<int> GetCurrentProfitAsync(System.DateTime start, System.DateTime end);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILogisticService/GetExpectedProfit", ReplyAction="http://tempuri.org/ILogisticService/GetExpectedProfitResponse")]
+        int GetExpectedProfit(System.DateTime start, System.DateTime end);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILogisticService/GetExpectedProfit", ReplyAction="http://tempuri.org/ILogisticService/GetExpectedProfitResponse")]
+        System.Threading.Tasks.Task<int> GetExpectedProfitAsync(System.DateTime start, System.DateTime end);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILogisticService/GetOrderNumber", ReplyAction="http://tempuri.org/ILogisticService/GetOrderNumberResponse")]
+        int GetOrderNumber(System.DateTime start, System.DateTime end, string state);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILogisticService/GetOrderNumber", ReplyAction="http://tempuri.org/ILogisticService/GetOrderNumberResponse")]
+        System.Threading.Tasks.Task<int> GetOrderNumberAsync(System.DateTime start, System.DateTime end, string state);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1185,6 +1203,30 @@ namespace LogisticClient.LogisticService {
         
         public System.Threading.Tasks.Task UpdateOrderStatusAsync(string trakingCode, string status) {
             return base.Channel.UpdateOrderStatusAsync(trakingCode, status);
+        }
+        
+        public int GetCurrentProfit(System.DateTime start, System.DateTime end) {
+            return base.Channel.GetCurrentProfit(start, end);
+        }
+        
+        public System.Threading.Tasks.Task<int> GetCurrentProfitAsync(System.DateTime start, System.DateTime end) {
+            return base.Channel.GetCurrentProfitAsync(start, end);
+        }
+        
+        public int GetExpectedProfit(System.DateTime start, System.DateTime end) {
+            return base.Channel.GetExpectedProfit(start, end);
+        }
+        
+        public System.Threading.Tasks.Task<int> GetExpectedProfitAsync(System.DateTime start, System.DateTime end) {
+            return base.Channel.GetExpectedProfitAsync(start, end);
+        }
+        
+        public int GetOrderNumber(System.DateTime start, System.DateTime end, string state) {
+            return base.Channel.GetOrderNumber(start, end, state);
+        }
+        
+        public System.Threading.Tasks.Task<int> GetOrderNumberAsync(System.DateTime start, System.DateTime end, string state) {
+            return base.Channel.GetOrderNumberAsync(start, end, state);
         }
     }
 }

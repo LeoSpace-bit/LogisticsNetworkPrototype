@@ -1,5 +1,6 @@
 ﻿using LogisticClient.Models;
 using LogisticClient.Views;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
@@ -74,8 +75,24 @@ namespace LogisticClient
             {
                 TrakingCode.Content = order.TrackingCode;
                 _client.AddFullOrder(order);
+                ClearData();
             }
+        }
 
+        private void ClearData()
+        {
+            FirstNameSender.Text = string.Empty;
+            LastNameSender.Text = string.Empty;
+            PatronymicSender.Text = string.Empty;
+            PassportSeriesSender.Text = string.Empty;
+            PassportNumberSender.Text = string.Empty;
+            PhoneNumberSender.Text = string.Empty;
+            FirstNameRecipient.Text = string.Empty;
+            LastNameRecipient.Text = string.Empty;
+            PatronymicRecipient.Text = string.Empty;
+            PassportSeriesRecipient.Text = string.Empty;
+            PassportNumberRecipient.Text = string.Empty;
+            PhoneNumberRecipient.Text = string.Empty;
         }
 
         private void SenderCity_SelectionChanged(object sender, SelectionChangedEventArgs e) => _manager.ShowDepartments(SenderCity, SenderDepartment);
@@ -171,6 +188,46 @@ namespace LogisticClient
         {
             Disconnect();
             Close();
+        }
+
+        private void RecipientDepartment_SelectionChanged(object sender, SelectionChangedEventArgs e) => AcceptButton.IsEnabled = true;
+
+        private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(StartDP.SelectedDate is null || EndDP.SelectedDate is null)
+            {
+                return;
+            }
+
+            if(StartDP.SelectedDate > EndDP.SelectedDate)
+            {
+                MessageBoxResult result = MessageBox.Show($"Did you mean from {EndDP.SelectedDate.Value.Date.ToShortDateString()} to {StartDP.SelectedDate.Value.Date.ToShortDateString()}? ", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    StartDP.SelectedDateChanged -= DatePicker_SelectedDateChanged;
+                    EndDP.SelectedDateChanged -= DatePicker_SelectedDateChanged;
+
+                    DateTime? start = StartDP.SelectedDate;
+                    StartDP.SelectedDate = EndDP.SelectedDate;
+                    EndDP.SelectedDate = start;
+
+
+                    StartDP.SelectedDateChanged += DatePicker_SelectedDateChanged;
+                    EndDP.SelectedDateChanged += DatePicker_SelectedDateChanged;
+                }
+            }
+
+            //Debug.WriteLine(EndDP.SelectedDate.Value.Date.ToString("yyyy-MM-dd"));
+
+            var currentProfit = _client.GetCurrentProfitAsync(StartDP.SelectedDate.Value.Date, EndDP.SelectedDate.Value.Date).Result;
+
+            CurrentProfitLable.Content = currentProfit;
+            ExpectedProfitLable.Content = _client.GetExpectedProfitAsync(StartDP.SelectedDate.Value.Date, EndDP.SelectedDate.Value.Date).Result + currentProfit;
+
+            AcceptedCarrierLable.Content = _client.GetOrderNumberAsync(StartDP.SelectedDate.Value.Date, EndDP.SelectedDate.Value.Date, "Accepted by the carrier").Result;
+            InTransitLable.Content = _client.GetOrderNumberAsync(StartDP.SelectedDate.Value.Date, EndDP.SelectedDate.Value.Date, "In transit").Result;
+            ArrivedPUPPointLable.Content = _client.GetOrderNumberAsync(StartDP.SelectedDate.Value.Date, EndDP.SelectedDate.Value.Date, "Arrived at the pick-up point").Result;
+            ReceivedRecipientLable.Content = _client.GetOrderNumberAsync(StartDP.SelectedDate.Value.Date, EndDP.SelectedDate.Value.Date, "Received at the collection point").Result;
         }
     }
 }

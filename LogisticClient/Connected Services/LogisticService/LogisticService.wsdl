@@ -103,6 +103,24 @@
   <wsdl:message name="ILogisticService_UpdateOrderStatus_OutputMessage">
     <wsdl:part name="parameters" element="tns:UpdateOrderStatusResponse" />
   </wsdl:message>
+  <wsdl:message name="ILogisticService_GetCurrentProfit_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentProfit" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_GetCurrentProfit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentProfitResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_GetExpectedProfit_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetExpectedProfit" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_GetExpectedProfit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetExpectedProfitResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_GetOrderNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderNumber" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticService_GetOrderNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderNumberResponse" />
+  </wsdl:message>
   <wsdl:message name="ILogisticService_QueryCallback_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:QueryCallback" />
   </wsdl:message>
@@ -150,6 +168,18 @@
     <wsdl:operation name="UpdateOrderStatus">
       <wsdl:input wsaw:Action="http://tempuri.org/ILogisticService/UpdateOrderStatus" message="tns:ILogisticService_UpdateOrderStatus_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ILogisticService/UpdateOrderStatusResponse" message="tns:ILogisticService_UpdateOrderStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentProfit">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILogisticService/GetCurrentProfit" message="tns:ILogisticService_GetCurrentProfit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILogisticService/GetCurrentProfitResponse" message="tns:ILogisticService_GetCurrentProfit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExpectedProfit">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILogisticService/GetExpectedProfit" message="tns:ILogisticService_GetExpectedProfit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILogisticService/GetExpectedProfitResponse" message="tns:ILogisticService_GetExpectedProfit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderNumber">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILogisticService/GetOrderNumber" message="tns:ILogisticService_GetOrderNumber_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILogisticService/GetOrderNumberResponse" message="tns:ILogisticService_GetOrderNumber_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="QueryCallback">
       <wsdl:output wsaw:Action="http://tempuri.org/ILogisticService/QueryCallback" message="tns:ILogisticService_QueryCallback_OutputCallbackMessage" />
@@ -250,6 +280,33 @@
     </wsdl:operation>
     <wsdl:operation name="UpdateOrderStatus">
       <soap12:operation soapAction="http://tempuri.org/ILogisticService/UpdateOrderStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentProfit">
+      <soap12:operation soapAction="http://tempuri.org/ILogisticService/GetCurrentProfit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExpectedProfit">
+      <soap12:operation soapAction="http://tempuri.org/ILogisticService/GetExpectedProfit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderNumber">
+      <soap12:operation soapAction="http://tempuri.org/ILogisticService/GetOrderNumber" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

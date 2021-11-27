@@ -187,6 +187,7 @@ namespace LogisticClient.Models
                 }
             });
 
+
             if (selectedSenderCity.Name == selectedRecipientCity.Name)
             {
                 MessageBox.Show("We do not deliver packages within the same city");
@@ -210,41 +211,80 @@ namespace LogisticClient.Models
             var temporaryNodes = (from node in cheapestRoad.Path select new LogisticClient.LogisticService.Node() { No = node.No, Cost = node.Cost, Type = node.Type.ToString() }).ToList();
             var road = new LogisticClient.LogisticService.Road() { Cost = cheapestRoad.Cost, Path = temporaryNodes.ToArray() };
 
-            var order = new LogisticClient.LogisticService.Order()
+            LogisticClient.LogisticService.Order order;
+
+            try
             {
-                Customer = new LogisticClient.LogisticService.Customer()
+                order = new LogisticClient.LogisticService.Order()
                 {
-                    FirstName = firstNameSender.Text,
-                    LastName = lastNameSender.Text,
-                    Patronymic = patronymicSender.Text,
-                    Passport = new LogisticClient.LogisticService.Passport()
+                    Customer = new LogisticClient.LogisticService.Customer()
                     {
-                        Series = passportSeriesSender.Text,
-                        Number = passportNumberSender.Text
+                        FirstName = CheckTerms(firstNameSender.Text, 3),
+                        LastName = CheckTerms(lastNameSender.Text, 3),
+                        Patronymic = patronymicSender.Text,
+                        Passport = new LogisticClient.LogisticService.Passport()
+                        {
+                            Series = CheckTerms(passportSeriesSender.Text, 4, 4),
+                            Number = CheckTerms(passportNumberSender.Text, 6, 6)
+                        },
+                        PhoneNumber = CheckPhoneTerms(phoneNumberSender.Text)
                     },
-                    PhoneNumber = phoneNumberSender.Text
-                },
-                Recipient = new LogisticClient.LogisticService.Customer()
-                {
-                    FirstName = firstNameRecipient.Text,
-                    LastName = lastNameRecipient.Text,
-                    Patronymic = patronymicRecipient.Text,
-                    Passport = new LogisticClient.LogisticService.Passport()
+                    Recipient = new LogisticClient.LogisticService.Customer()
                     {
-                        Series = passportSeriesRecipient.Text,
-                        Number = passportNumberRecipient.Text
+                        FirstName = CheckTerms(firstNameRecipient.Text, 3),
+                        LastName = CheckTerms(lastNameRecipient.Text, 3),
+                        Patronymic = patronymicRecipient.Text,
+                        Passport = new LogisticClient.LogisticService.Passport()
+                        {
+                            Series = CheckTerms(passportSeriesRecipient.Text, 4, 4),
+                            Number = CheckTerms(passportNumberRecipient.Text, 6, 6)
+                        },
+                        PhoneNumber = CheckPhoneTerms(phoneNumberRecipient.Text)
                     },
-                    PhoneNumber = phoneNumberRecipient.Text
-                },
-                Path = road,
-                Cost = road.Cost + selectedCategories.Sum(item => item.AddedСost),
-                ReceivingPoint = senderDepart,      //FROM
-                DeliveryPoint = recipientDepart,    //TO
-                CurrentState = "Accepted by the carrier"
-            };
-            order.TrackingCode = $"LV{MathTrackingCode(order)}l";
+                    Path = road,
+                    Cost = road.Cost + selectedCategories.Sum(item => item.AddedСost),
+                    ReceivingPoint = senderDepart,      //FROM
+                    DeliveryPoint = recipientDepart,    //TO
+                    CurrentState = "Accepted by the carrier"
+                };
+                order.TrackingCode = $"LV{MathTrackingCode(order)}l";
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return null;
+            }
 
             return order;
+        }
+
+        internal string CheckTerms(string line, int minLength, int maxLength = 255)
+        {
+            if(string.IsNullOrWhiteSpace(line))
+            {
+                throw new ArgumentException($"Wrong format. Line is empty");
+            }
+            else if(line.Length < minLength || line.Length > maxLength)
+            {
+                throw new ArgumentException($"Wrong format. Line: {line}");
+            }
+            return line;
+        }
+
+        internal string CheckPhoneTerms(string line)
+        {
+            if (string.IsNullOrWhiteSpace(line))
+            {
+                throw new ArgumentException($"Wrong format. Line is empty");
+            }
+
+            var value = new System.Text.RegularExpressions.Regex(@"^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$").Match(line);
+            if (!value.Success)
+            {
+                throw new ArgumentException($"Wrong format. Line: {line}");
+            }
+
+            return line;
         }
 
     }

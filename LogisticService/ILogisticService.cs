@@ -1,4 +1,5 @@
 ﻿using LogisticService.model;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -22,6 +23,9 @@ namespace LogisticService
         [OperationContract] List<RoadStatus> GetRoadStatuses(string trakingCode);
         [OperationContract] bool IsRightAnswer(string trakingCode, string phoneNumber);
         [OperationContract] void UpdateOrderStatus(string trakingCode, string status);
+        [OperationContract] int GetCurrentProfit(DateTime start, DateTime end);
+        [OperationContract] int GetExpectedProfit(DateTime start, DateTime end);
+        [OperationContract] int GetOrderNumber(DateTime start, DateTime end, string state);
     }
 
     public interface ILogisticServiceCallback
