@@ -329,7 +329,8 @@ namespace LogisticService
             try
             {
                 new DBC().ExecuteQueryScalar($"SELECT SUM(cost) FROM \"order\" JOIN road ON road.orderid = \"order\".id WHERE road.serialnumber = 1 AND datatime BETWEEN '{start.Date.ToString("yyyy-MM-dd")} 00:00:00' AND '{end.Date.ToString("yyyy-MM-dd")} 23:59:59' AND \"order\".currentstate = 'Received at the collection point';", out object profit);
-                return int.Parse(profit.ToString());
+
+                return profit is null ? int.MinValue : int.Parse(profit.ToString());
             }
             catch (Exception e)
             {
@@ -344,7 +345,7 @@ namespace LogisticService
             try
             {
                 new DBC().ExecuteQueryScalar($"SELECT SUM(cost) FROM \"order\" JOIN road ON road.orderid = \"order\".id WHERE road.serialnumber = 1 AND datatime BETWEEN '{start.Date.ToString("yyyy-MM-dd")} 00:00:00' AND '{end.Date.ToString("yyyy-MM-dd")} 23:59:59' AND \"order\".currentstate != 'Received at the collection point';", out object profit);
-                return int.Parse(profit.ToString());
+                return profit is null ? int.MinValue : int.Parse(profit.ToString());
             }
             catch (Exception e)
             {
@@ -359,7 +360,7 @@ namespace LogisticService
             try
             {
                 new DBC().ExecuteQueryScalar($"SELECT COUNT(*) FROM \"order\" JOIN road ON road.orderid = \"order\".id WHERE \"order\".currentstate = '{state}' AND road.serialnumber = 1 AND datatime BETWEEN '{start.Date.ToString("yyyy-MM-dd")} 00:00:00' AND '{end.Date.ToString("yyyy-MM-dd")} 23:59:59';", out object profit);
-                return int.Parse(profit.ToString());
+                return profit is null ? int.MinValue : int.Parse(profit.ToString());
             }
             catch (Exception e)
             {

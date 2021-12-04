@@ -199,7 +199,7 @@ namespace LogisticClient
                 return;
             }
 
-            if(StartDP.SelectedDate > EndDP.SelectedDate)
+            if (StartDP.SelectedDate > EndDP.SelectedDate)
             {
                 MessageBoxResult result = MessageBox.Show($"Did you mean from {EndDP.SelectedDate.Value.Date.ToShortDateString()} to {StartDP.SelectedDate.Value.Date.ToShortDateString()}? ", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
@@ -217,17 +217,26 @@ namespace LogisticClient
                 }
             }
 
-            //Debug.WriteLine(EndDP.SelectedDate.Value.Date.ToString("yyyy-MM-dd"));
+            if (StartDP.SelectedDate <= EndDP.SelectedDate)
+            {
+                var currentProfit = PrepareInt(_client.GetCurrentProfitAsync(StartDP.SelectedDate.Value.Date, EndDP.SelectedDate.Value.Date).Result);
 
-            var currentProfit = _client.GetCurrentProfitAsync(StartDP.SelectedDate.Value.Date, EndDP.SelectedDate.Value.Date).Result;
+                CurrentProfitLable.Content = currentProfit;
+                ExpectedProfitLable.Content = currentProfit == "Invalid input" ? "Invalid input" : _client.GetExpectedProfitAsync(StartDP.SelectedDate.Value.Date, EndDP.SelectedDate.Value.Date).Result + currentProfit;
 
-            CurrentProfitLable.Content = currentProfit;
-            ExpectedProfitLable.Content = _client.GetExpectedProfitAsync(StartDP.SelectedDate.Value.Date, EndDP.SelectedDate.Value.Date).Result + currentProfit;
+                AcceptedCarrierLable.Content = PrepareInt(_client.GetOrderNumberAsync(StartDP.SelectedDate.Value.Date, EndDP.SelectedDate.Value.Date, "Accepted by the carrier").Result);
+                InTransitLable.Content = PrepareInt(_client.GetOrderNumberAsync(StartDP.SelectedDate.Value.Date, EndDP.SelectedDate.Value.Date, "In transit").Result);
+                ArrivedPUPPointLable.Content = PrepareInt(_client.GetOrderNumberAsync(StartDP.SelectedDate.Value.Date, EndDP.SelectedDate.Value.Date, "Arrived at the pick-up point").Result);
+                ReceivedRecipientLable.Content = PrepareInt(_client.GetOrderNumberAsync(StartDP.SelectedDate.Value.Date, EndDP.SelectedDate.Value.Date, "Received at the collection point").Result);
+            }
+            else
+            {
+                ReceivedRecipientLable.Content = ArrivedPUPPointLable.Content = InTransitLable.Content = AcceptedCarrierLable.Content = ExpectedProfitLable.Content =  CurrentProfitLable.Content = "Invalid input";
+            }
 
-            AcceptedCarrierLable.Content = _client.GetOrderNumberAsync(StartDP.SelectedDate.Value.Date, EndDP.SelectedDate.Value.Date, "Accepted by the carrier").Result;
-            InTransitLable.Content = _client.GetOrderNumberAsync(StartDP.SelectedDate.Value.Date, EndDP.SelectedDate.Value.Date, "In transit").Result;
-            ArrivedPUPPointLable.Content = _client.GetOrderNumberAsync(StartDP.SelectedDate.Value.Date, EndDP.SelectedDate.Value.Date, "Arrived at the pick-up point").Result;
-            ReceivedRecipientLable.Content = _client.GetOrderNumberAsync(StartDP.SelectedDate.Value.Date, EndDP.SelectedDate.Value.Date, "Received at the collection point").Result;
         }
+
+        private string PrepareInt(int value) => value == int.MinValue? "Invalid input" : value.ToString();
+
     }
 }

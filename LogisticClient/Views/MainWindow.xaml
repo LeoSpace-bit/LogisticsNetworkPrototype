@@ -39,7 +39,6 @@
                 </dragablz:TabablzControl.InterTabController>
 
                 <TabItem Header="MAKE AN ORDER" FontWeight="Bold">
-
                     <StackPanel Orientation="Horizontal" Margin="10,10,10,0">
 
                         <DockPanel Margin="5"  Width="240" HorizontalAlignment="Left">
@@ -130,7 +129,6 @@
                         </DockPanel>
 
                     </StackPanel>
-
                 </TabItem>
 
                 <TabItem Header="TRACKING">
@@ -139,7 +137,7 @@
                         <DockPanel Margin="5"  Width="700" HorizontalAlignment="Left">
                             <Border CornerRadius="5" BorderBrush="Gray" BorderThickness="2" DockPanel.Dock="Top" >
                                 <StackPanel HorizontalAlignment ="Left" Margin="6,10,2,10" Width="720">
-                                    <TextBox x:Name="SearchLine" Margin="2" materialDesign:HintAssist.Hint="Enter tracking code" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14" KeyDown="SearchLine_KeyDown" />
+                                    <TextBox x:Name="SearchLine" Margin="2" materialDesign:HintAssist.Hint="Enter tracking code" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14" KeyDown="SearchLine_KeyDown" FontWeight="Bold" />
                                     <Separator Margin="-6,8,-10,10" Height="1"/>
                                     <ListBox x:Name="PathHistory" Height="420" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
                                 </StackPanel>
@@ -158,8 +156,8 @@
                         <DockPanel Margin="5"  Width="385" Height="180" HorizontalAlignment="Left">
                             <Border CornerRadius="5" BorderBrush="Gray" BorderThickness="2" DockPanel.Dock="Top" >
                                 <StackPanel HorizontalAlignment ="Left" Margin="6,10,2,10" Width="720"  >
-                                    <TextBox x:Name="ATrackingCode" Text="LV1049724429l" Margin="2" materialDesign:HintAssist.Hint="Enter tracking code" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14"/>
-                                    <TextBox x:Name="APhoneNumber" Text="89000000001" Margin="2" materialDesign:HintAssist.Hint="Enter the recipient's phone number" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14"/>
+                                    <TextBox x:Name="ATrackingCode" Text="LV1049724429l" Margin="2" materialDesign:HintAssist.Hint="Enter tracking code" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14"  FontWeight="Bold"/>
+                                    <TextBox x:Name="APhoneNumber" Text="89000000001" Margin="2" materialDesign:HintAssist.Hint="Enter the recipient's phone number" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14"  FontWeight="Bold"/>
                                     <Separator Margin="-20,10,-20,10" Height="1"/>
                                     <Button Content="CHECK" FontWeight="Bold" FontSize="14" Margin="10,0,360,0" Click="Button_CheckOrder"/>
                                 </StackPanel>
@@ -178,8 +176,8 @@
                             <DockPanel Margin="5" HorizontalAlignment="Left">
                                 <Border CornerRadius="5" BorderBrush="Gray" BorderThickness="2" DockPanel.Dock="Top" >
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment ="Left" Margin="6,10,2,10" Width="720">
-                                        <DatePicker x:Name ="StartDP"  Width="330" HorizontalAlignment="Left" Margin="15,0" materialDesign:HintAssist.Hint="Start" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14" SelectedDateChanged="DatePicker_SelectedDateChanged" />
-                                        <DatePicker x:Name ="EndDP" Width="330" HorizontalAlignment="Left" Margin="15,0" materialDesign:HintAssist.Hint="End" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
+                                        <DatePicker x:Name ="StartDP"  Width="330" HorizontalAlignment="Left" Margin="15,0" materialDesign:HintAssist.Hint="Start" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14" SelectedDateChanged="DatePicker_SelectedDateChanged" FontWeight="Bold"/>
+                                        <DatePicker x:Name ="EndDP" Width="330" HorizontalAlignment="Left" Margin="15,0" materialDesign:HintAssist.Hint="End" materialDesign:HintAssist.FloatingScale="0.9" FontSize="14" SelectedDateChanged="DatePicker_SelectedDateChanged" FontWeight="Bold"/>
                                     </StackPanel>
                                 </Border>
                             </DockPanel>
