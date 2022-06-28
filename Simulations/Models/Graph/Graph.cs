@@ -15,7 +15,7 @@ namespace Models.Graph
 
         private int _verticesNumber;
         private Dictionary<int, City> _vertices;
-        private List<Node>[] adjacencyList;
+        private List<Node>[] _adjacencyList;
         private List<List<Node>> _paths { get; set; }
 
         internal Graph()
@@ -27,11 +27,11 @@ namespace Models.Graph
 
         private void InitAdjList() // utility method to initialise // adjacency list
         {
-            adjacencyList = new List<Node>[_verticesNumber];
+            _adjacencyList = new List<Node>[_verticesNumber];
 
             for (int i = 0; i < _verticesNumber; i++)
             {
-                adjacencyList[i] = new List<Node>();
+                _adjacencyList[i] = new List<Node>();
             }
         }
 
@@ -59,7 +59,7 @@ namespace Models.Graph
 
         internal void AddEdge(City starting, City destination, Type type, int cost)
         {
-            adjacencyList[starting.ID].Add(new Node(destination.ID, type, cost));
+            _adjacencyList[starting.ID].Add(new Node(destination.ID, type, cost));
         }
 
         internal void AddEdge(City starting, City destination, string type, int cost)
@@ -77,7 +77,7 @@ namespace Models.Graph
                     break;
             }
 
-            adjacencyList[starting.ID].Add(new Node(destination.ID, value, cost));
+            _adjacencyList[starting.ID].Add(new Node(destination.ID, value, cost));
         }
 
         internal void FindAllPaths(int starting, int destination, params Type[] types)
@@ -106,7 +106,7 @@ namespace Models.Graph
             }
 
             isVisited[starting] = true;
-            foreach (Node node in adjacencyList[starting]) // Recur for all the vertices // adjacent to current vertex
+            foreach (Node node in _adjacencyList[starting]) // Recur for all the vertices // adjacent to current vertex
             {
                 foreach (var item in types)
                 {

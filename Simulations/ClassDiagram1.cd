@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Simulations.DataUpdateSimulation">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAQAAAAAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataUpdateSimulation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Simulations.City">
+    <Position X="8.5" Y="4.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAACAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\City.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Departments" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Simulations.Customer">
+    <Position X="13.25" Y="2.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAGAAAAAAAAAAABAAQAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Models\Customer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Passport" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Simulations.Department">
+    <Position X="14.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Department.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Simulations.Node">
+    <Position X="10.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAACAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Models\Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Simulations.Order">
+    <Position X="16.75" Y="2.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAABAAAgAIAAAAAgDAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Models\Order.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Customer" />
+      <Property Name="DeliveryPoint" />
+      <Property Name="Path" />
+      <Property Name="ReceivingPoint" />
+      <Property Name="Recipient" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Simulations.Passport">
+    <Position X="10.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Models\Passport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Simulations.Road">
+    <Position X="13.5" Y="6.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Road.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Path" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Simulations.Way">
+    <Position X="7.75" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAACAAAAAAAARAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Way.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="DeliveryType" />
+      <Property Name="DestinationCity" />
+      <Property Name="InitialCity" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Simulations.NewOrdersSimulation">
+    <Position X="3.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAhAAEBECABAAAAA0AAAAAAAAgAEAIAAAAAAAE=</HashCode>
+      <FileName>NewOrdersSimulation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Simulations.Program">
+    <Position X="0.5" Y="0.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQQAAAAAAAAAAAAAAAAAIAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_dataUpdateSimulation" />
+      <Field Name="_newOrdersSimulation" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Models.Graph.Graph">
+    <Position X="1" Y="8.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAKAAAAAACAAAACAEBACAAYAgAACAEAAgAAAQABAA=</HashCode>
+      <FileName>Models\Graph\Graph.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_vertices" />
+      <Field Name="_adjacencyList" />
+      <Property Name="_paths" />
+      <Property Name="Ways" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Models.Graph.Node" BaseTypeListCollapsed="true">
+    <Position X="6" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAABAAACAAAAAAAQAAAAAAABA=</HashCode>
+      <FileName>Models\Graph\Node.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.158" Collapsed="true" />
+  </Class>
+  <Class Name="Models.Graph.Way">
+    <Position X="1" Y="6.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Graph\Way.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Path" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="System.Collections.Generic.List&lt;T&gt;" Collapsed="true">
+    <Position X="6.5" Y="9.25" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="System.Collections.Generic.List&lt;T&gt;.Enumerator" Collapsed="true">
+        <TypeIdentifier />
+        <Lollipop Position="0.2" />
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Enum Name="Simulations.Type">
+    <Position X="11.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAgAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Models\Type.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
